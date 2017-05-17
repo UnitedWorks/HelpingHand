@@ -12,8 +12,7 @@ export default function QuestDataWrapper(Component) {
 		}
 
 		componentDidMount() {
-			console.log(this.props);
-			let id = this.props.match.id ? this.props.match.id : null;
+			let id = this.props.match.params.id ? this.props.match.params.id : null;
 			this.store.fetchData(id);
 		}
 

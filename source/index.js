@@ -7,11 +7,8 @@ import { AppContainer } from "react-hot-loader";
 import { rehydrate, hotRehydrate } from "rfx-core";
 
 import { isProduction } from "./utils/constants";
-import initializeFirebase from './utils/firebase';
 import App from "./routes/App";
 import stores from "./stores/stores";
-
-import firebase from './utils/firebase';
 
 const store = rehydrate();
 

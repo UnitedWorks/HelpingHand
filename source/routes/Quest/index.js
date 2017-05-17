@@ -13,6 +13,9 @@ export default class Quest extends Component {
 	}
 	render() {
 		const { quest } = this.store.questState;
+		console.log('!?!?!??!?!!?')
+		console.log(quest)
+		console.log('!?!?!??!?!!?')
 		return (
 			<div className="page post">
 				<Link to="/">← Back</Link>

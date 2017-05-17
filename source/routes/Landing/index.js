@@ -17,7 +17,7 @@ export default class Landing extends Component {
 			<div className="page posts">
 				<h1>Quests</h1>
 				<p className="subheader">
-					Quests are fetched from Firebase
+					Quests are fetched from Postgres (get out of here firebase)
 				</p>
 				<hr />
 				<ul>
@@ -25,7 +25,7 @@ export default class Landing extends Component {
 						? quests.map(quest => {
 								return (
 									<li key={quest.id}>
-										<Link to={`${this.props.match.path}/${quest.id}`}>
+										<Link to={`${this.props.match.path}${quest.id}`}>
 											<h1>{quest.title}</h1>
 										</Link>
 										<p>{quest.description.substring(0, 120)}</p>

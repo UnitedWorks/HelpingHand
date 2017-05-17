@@ -1,7 +1,5 @@
 import { observable, action } from "mobx";
-import axios from "axios";
-
-import firebase from '../utils/firebase';
+import axios from 'axios';
 
 export default class QuestState {
   @observable quests;
@@ -13,9 +11,10 @@ export default class QuestState {
   }
 
   async fetchData(id) {
-    // Firebase fetching to do
-    console.log(data);
-    data.length > 0 ? this.setData(data) : this.setSingle(data);
+    const params = {};
+    if (id) params.id = id;
+    let { data } = await axios.get('quests');
+    data.length > 0 ? this.setData(data.quests) : this.setSingle(data.quest);
   }
 
   @action setData(data) {

@@ -1,3 +1,8 @@
-const isProduction = process.env.NODE_ENV === "production";
+import axios from 'axios';
 
-export { isProduction };
+const isProduction = process.env.NODE_ENV === "production";
+const apiURL = 'https://helpinghand-api.herokuapp.com';
+
+axios.defaults.baseURL = apiURL;
+
+export { isProduction, apiURL };

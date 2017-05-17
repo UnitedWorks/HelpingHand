@@ -4,4 +4,3 @@ yarn.lock
 .env
 .DS_Store
 npm-debug.log
-source/utils/firebase.js

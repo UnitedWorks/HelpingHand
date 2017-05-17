@@ -38,14 +38,14 @@ export default class App extends Component {
 				/>
 				<footer>
 					{testval}
-					<a href="https://twitter.com/mhaagens" target="_blank">
-						@mhaagens
+					<a href="https://twitter.com/youmustfight" target="_blank">
+						@youmustfight
 					</a>
 					{" "}
 					| github:
 					{" "}
-					<a href="https://github.com/mhaagens" target="_blank">
-						mhaagens
+					<a href="https://github.com/youmustfight" target="_blank">
+						youmustfight
 					</a>
 				</footer>
 			</div>
