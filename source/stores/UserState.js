@@ -15,7 +15,6 @@ export default class UserState {
     let { data } = await axios.get(
       `https://jsonplaceholder.typicode.com${pathname}`
     );
-    console.log(data);
     this.setData(data);
   }
 

@@ -26,7 +26,7 @@ export default class Landing extends Component {
 								return (
 									<li key={quest.id}>
 										<Link to={`${this.props.match.path}${quest.id}`}>
-											<h1>{quest.title}</h1>
+											<h1>{quest.name}</h1>
 										</Link>
 										<p>{quest.description.substring(0, 120)}</p>
 									</li>

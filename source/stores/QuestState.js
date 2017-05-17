@@ -13,8 +13,8 @@ export default class QuestState {
   async fetchData(id) {
     const params = {};
     if (id) params.id = id;
-    let { data } = await axios.get('quests');
-    data.length > 0 ? this.setData(data.quests) : this.setSingle(data.quest);
+    let { data } = await axios.get('quests', { params });
+    data.quests ? this.setData(data.quests) : this.setSingle(data.quest);
   }
 
   @action setData(data) {
