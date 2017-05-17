@@ -14,14 +14,23 @@ export default class Quest extends Component {
 	render() {
 		const { quest } = this.store.questState;
 		return (
-			<div className="page post">
+			<div className="quest">
 				<Link to="/">← Back</Link>
 				{!!quest &&
 					<article>
 						<h1>{quest.name}</h1>
 						<p>{quest.description}</p>
+						<hr/>
+						{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
+							return (
+								<div key={index}>
+									<h5>{goal.need}</h5>
+									<h6>{goal.reward}</h6>
+									<p>{goal.proof_instructions}</p>
+								</div>
+							)
+						})}
 					</article>}
-
 			</div>
 		);
 	}

@@ -1,0 +1,14 @@
+.quests {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 24px;
+    div {
+        margin-right: 36px;
+        margin-bottom: 36px;
+    }
+}

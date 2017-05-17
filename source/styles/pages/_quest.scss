@@ -1,4 +1,4 @@
-.post {
+.quest {
 	min-width: 960px;
 	max-width: 960px;
 	padding: 48px 24px;
@@ -18,7 +18,7 @@
 	p {
 		&::first-letter {
 			text-transform: uppercase;
-		}	
+		}
 	}
 	@media screen and (max-width: 960px) {
 		min-width: 100%;
