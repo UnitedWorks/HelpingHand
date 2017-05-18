@@ -58,7 +58,9 @@ export default class Quest extends Component {
 				<Link className="back-button" to="/">← Back</Link>
 				<section>
 					<article>
-						<h4>Ask for a hand</h4>
+						<h3>Ask for a Hand (Video Required)</h3>
+						<p>Go download the <u>Youtube app</u> for recording/uploading/getting a link to do this via mobile!</p>
+						<br />
 						<div className="input-field">
 							<label>Your Quest</label>
 							<input type="text" placeholder="Ex) Helping Hand!" onChange={e => this.handleQuestChange('name', e.target.value)} />
