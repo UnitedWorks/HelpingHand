@@ -1,7 +1,10 @@
-.quest {
+.quest, .ask {
 	width: 960px;
 	margin: 0 auto;
 	padding: 24px;
+	.back-button {
+		display: none;
+	}
 	a {
 		margin: 0 0 72px 0;
 	}
@@ -55,8 +58,7 @@
 	.goal {
 		margin-bottom: 12px;
 		background: white;
-		padding: 24px;
-		box-shadow: 0px 6px 16px #fafafa;
+		padding: 24px 0;
 		h5 {
 			font-size: 24px;
 			font-weight: 900;
@@ -67,5 +69,44 @@
 		p {
 			color: #aaa;
 		}
+	}
+}
+
+.ask-goal {
+	margin-top: 40px;
+	h6 {
+		font-weight: 600;
+	}
+}
+
+.input-field {
+	margin: 18px 0;
+	label, input {
+		display: block;
+	}
+	label {
+		font-size: 12px;
+		font-weight: 200;
+		padding-bottom: 6px;
+	}
+	input {
+		width: 100%;
+		padding: 8px 12px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		outline: none;
+	}
+}
+
+button {
+	padding: 12px;
+	border: 1px solid black;
+	outline: none;
+	background: none;
+	font-size: 16px;
+	font-weight: 600;
+	&:hover {
+		background: black;
+		color: white;
 	}
 }

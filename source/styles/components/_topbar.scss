@@ -9,4 +9,10 @@
 	color: rgba(#000, .5);
 	font-weight: 600;
 	font-size: 48px;
+	p {
+		font-size: 15px;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }

@@ -14,15 +14,10 @@ export default class TopBar extends Component {
 		this.store = this.props.store.appState;
 	}
 
-	authenticate(e) {
-		if (e) e.preventDefault();
-	}
-
 	render() {
-		const { authenticated } = this.store;
 		return (
 			<div className="topbar">
-				<ActiveLink to="/">👋</ActiveLink>
+				<Link to="/"><p>Give a </p></Link><ActiveLink to="/">👋</ActiveLink> <Link to="/ask"><p>or ask for one →</p></Link>
 			</div>
 		);
 	}

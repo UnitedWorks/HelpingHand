@@ -30,7 +30,14 @@ export default class App extends Component {
 				/>
 				<Route
 					exact
-					path="/:id"
+					path="/ask"
+					render={props => (
+						<LazyRoute {...props} component={import("./Ask")} />
+					)}
+				/>
+				<Route
+					exact
+					path="/quest/:id"
 					render={props => (
 						<LazyRoute {...props} component={import("./Quest")} />
 					)}
