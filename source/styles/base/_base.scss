@@ -26,21 +26,25 @@ body {
 }
 
 footer {
-	display: flex;
-	flex: 0 1 auto;
-	align-items: center;
-	justify-content: center;
+	display: block;
   text-align: center;
 	width: 100%;
 	height: 60px;
-	padding: 18px;
+	padding: 16px;
+  margin: 16px;
 	border-top: 1px solid #FAFAFA;
 	font-size: 14px;
 	color: #aaa;
-	a {
-		margin-left: .5ch;
-		&:first-child {
-		margin-right: .5ch;
-		}
+	p {
+		margin-top: 8px;
 	}
+  a > p {
+    font-size: 10px;
+    text-decoration: underline;
+    opacity: 0.5;
+    transition: 0.3s;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

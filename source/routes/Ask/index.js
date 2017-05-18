@@ -76,7 +76,7 @@ export default class Quest extends Component {
 						{Array.prototype.map.call([{},{},{}], (goal, index) => {
 							return (
 								<div className="ask-goal" key={index}>
-									<h6>Ask #{index + 1}</h6>
+									<h6>Ask #{index + 1} {index !== 0 ? '(Optional)' : ''}</h6>
 									<div className="input-field">
 										<label>Asking For</label>
 										<input type="text" placeholder="I'm looking to community leaders!" onChange={e => this.handleGoalChange(index, 'ask', e.target.value)} />
