@@ -4,7 +4,7 @@ import { Match, Link } from "react-router-dom";
 export default class QuestTile extends Component {
   render() {
 
-    const widths = [400, 320, 240];
+    const widths = [400, 350, 300];
     const width = widths[Math.floor(Math.random() * widths.length)];
     return (
       <div className={"quest-tile".concat(` width-${width}`)}>
