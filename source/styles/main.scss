@@ -8,10 +8,10 @@
 // Components
 
 @import 'components/topbar';
-@import 'components/page';
 
 // Pages
 
-@import 'pages/home';
-@import 'pages/quests';
-@import 'pages/quest-tile';
+@import 'quests/home';
+@import 'quests/quests';
+@import 'quests/quest-tile';
+@import 'quests/quest';

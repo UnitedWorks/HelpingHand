@@ -19,7 +19,6 @@ export default class App extends Component {
 		} = this.store.appState;
 		return (
 			<div className="wrapper">
-				{/*<DevTools />*/}
 				<TopBar />
 
 				<Route
@@ -37,16 +36,7 @@ export default class App extends Component {
 					)}
 				/>
 				<footer>
-					{testval}
-					<a href="https://twitter.com/youmustfight" target="_blank">
-						@youmustfight
-					</a>
-					{" "}
-					| github:
-					{" "}
-					<a href="https://github.com/youmustfight" target="_blank">
-						youmustfight
-					</a>
+					😘😘😘 to ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____
 				</footer>
 			</div>
 		);

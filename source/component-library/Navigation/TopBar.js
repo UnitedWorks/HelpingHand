@@ -22,7 +22,7 @@ export default class TopBar extends Component {
 		const { authenticated } = this.store;
 		return (
 			<div className="topbar">
-				<ActiveLink to="/">Helping Hand</ActiveLink>
+				<ActiveLink to="/">👋</ActiveLink>
 			</div>
 		);
 	}

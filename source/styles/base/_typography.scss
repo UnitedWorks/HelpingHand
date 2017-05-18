@@ -6,10 +6,13 @@ html {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	line-height: 1.5;
+	color: #000;
+	a {
+		color: #000;
+	}
 }
 
 body {
-	color: #666;
 	line-height: 1.333;
 }
 
@@ -29,11 +32,4 @@ small, .font_small {font-size: 0.707em;}
 a {
 	text-decoration: none;
 	cursor: pointer;
-	color: rgba(#000, .9);
-	&:hover {
-		color: rgba(#000, 1);
-	}
-	&.active {
-		color: rgba(#000, 1);
-	}
 }
