@@ -24,6 +24,12 @@ export default class QuestTile extends Component {
           </Link>
         </div>
         <iframe type="text/html" width={width} height={width*1.8} src={`https://www.youtube.com/embed/${this.props.quest.video_url}?controls=0&fs=0&loop=1&modestbranding=1&rel=0&color=white`} />
+        <Link to={`quest${this.props.match.path}${this.props.quest.id}`}>
+          <div className="header">
+            <span className="giving">For help with {this.props.quest.name.length > 32 ? `${this.props.quest.name.substring(0,32)}...` : this.props.quest.name}!</span>
+            <span className="goArrow">→</span>
+          </div>
+        </Link>
       </div>
     )
   }
