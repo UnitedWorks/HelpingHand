@@ -72,10 +72,27 @@
 	}
 }
 
-.ask-goal {
-	margin-top: 40px;
+.ask {
+	text-align: center;
 	h6 {
 		font-weight: 600;
+	}
+}
+
+.video-holders {
+}
+
+.ask-goal {
+	.input-container {
+		display: flex;
+	}
+	.input-field {
+		flex-grow: 1;
+	}
+	@media(max-width: 960px) {
+		.input-container {
+			display: block;
+		}
 	}
 }
 

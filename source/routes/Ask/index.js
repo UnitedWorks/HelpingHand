@@ -12,38 +12,40 @@ export default class Quest extends Component {
 		super(props);
 		this.store = this.props.store;
 		this.state = {
-			name: '',
-			description: '',
-			video_url: '',
-			goals: [{
-				ask: '',
-				giving: '',
-				proof_instructions: '',
-			},{
-				ask: '',
-				giving: '',
-				proof_instructions: '',
-			}, {
-				ask: '',
-				giving: '',
-				proof_instructions: '',
-			}],
+			quest: {
+				name: '',
+				description: '',
+				video_url: '',
+				goals: [{
+					ask: '',
+					giving: '',
+					proof_instructions: '',
+				},{
+					ask: '',
+					giving: '',
+					proof_instructions: '',
+				}, {
+					ask: '',
+					giving: '',
+					proof_instructions: '',
+				}],
+			}
 		};
 		this.handleQuestChange = this.handleQuestChange.bind(this);
 		this.handleGoalChange = this.handleGoalChange.bind(this);
 	}
 	handleQuestChange(key, value) {
 		const newState = this.state;
-		newState[key] = value;
+		newState.quest[key] = value;
 		this.setState(newState);
 	}
 	handleGoalChange(index, key, value) {
 		const newState = this.state;
-		newState.goals[index][key] = value;
+		newState.quest.goals[index][key] = value;
 		this.setState(newState);
 	}
 	handleSumbit() {
-		axios.post('quests', { quest: this.state }).then(() => {
+		axios.post('quests', { quest: this.state.quest }).then(() => {
 			alert('Sent!');
 			this.props.history.push('/');
 		}).catch(() => {
@@ -52,42 +54,44 @@ export default class Quest extends Component {
 		});
 	}
 	render() {
-		console.log(this)
 		return (
 			<div className="ask">
 				<Link className="back-button" to="/">← Back</Link>
 				<section>
 					<article>
-						<h3>Ask for a Hand (Video Required)</h3>
-						<p>Go download the <u>Youtube app</u> for recording/uploading/getting a link to do this via mobile!</p>
-						<br />
 						<div className="input-field">
-							<label>Your Quest</label>
+							<h6>Your Ask!  -> <u><a href="https://www.youtube.com/upload" target="_blank">Upload on Youtube</a></u></h6>
+							<small>Under 30~45 Seconds</small>
+							<br/>
+							<input type="text" placeholder="Ex) https://www.youtube.com/watch?v=Sn7t-T3Ngzo" onChange={e => this.handleQuestChange('video_url', e.target.value)} />
+						</div>
+						<br/>
+						<div className="input-field">
+							<label>Project Name</label>
 							<input type="text" placeholder="Ex) Helping Hand!" onChange={e => this.handleQuestChange('name', e.target.value)} />
 						</div>
 						<div className="input-field">
-							<label>Description</label>
+							<label>Project Description</label>
 							<input type="text" placeholder="Ex) Give folks a way to ask a community for non-monetary assistance while still rewarding them for their help. Can be projects big and small!" onChange={e => this.handleQuestChange('description', e.target.value)} />
 						</div>
-						<div className="input-field">
-							<label>Youtube URL (Under 1 minute!)</label>
-							<input type="text" placeholder="Ex) https://www.youtube.com/watch?v=Sn7t-T3Ngzo" onChange={e => this.handleQuestChange('video_url', e.target.value)} />
-						</div>
+						<br/>
 						{Array.prototype.map.call([{},{},{}], (goal, index) => {
 							return (
 								<div className="ask-goal" key={index}>
-									<h6>Ask #{index + 1} {index !== 0 ? '(Optional)' : ''}</h6>
-									<div className="input-field">
-										<label>Asking For</label>
-										<input type="text" placeholder="I'm looking to community leaders!" onChange={e => this.handleGoalChange(index, 'ask', e.target.value)} />
-									</div>
-									<div className="input-field">
-										<label>Giving in Return</label>
-										<input type="text" placeholder="I am a great designer. I can help you out with a logo!" onChange={e => this.handleGoalChange(index, 'giving', e.target.value)} />
-									</div>
-									<div className="input-field">
-										<label>Proof by</label>
-										<input type="text" placeholder="Email ___ with x, y, z!" onChange={e => this.handleGoalChange(index, 'proof_instructions', e.target.value)} />
+									<h6>Goal #{index + 1} {index !== 0 ? '(Optional)' : ''}</h6>
+									<div className="input-container">
+										<div className="input-field">
+											<label>Need help with...</label>
+											<input type="text" placeholder="I'm looking to community leaders!" onChange={e => this.handleGoalChange(index, 'ask', e.target.value)} />
+										</div>
+										<div className="input-field">
+											<label>... can give in return....</label>
+											<input type="text" placeholder="I am a great designer. I can help you out with a logo!" onChange={e => this.handleGoalChange(index, 'giving', e.target.value)} />
+										</div>
+										<div className="input-field">
+											<label>...prove by...</label>
+											<input type="text" placeholder="Email me with x, y, z!" onChange={e => this.handleGoalChange(index, 'proof_instructions', e.target.value)} />
+										</div>
 									</div>
 								</div>
 							)
