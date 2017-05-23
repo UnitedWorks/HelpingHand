@@ -1,19 +1,26 @@
 import React, { Component } from "react";
+import Webcam from './Webcam';
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import RecordRTC from 'recordrtc';
 
+import { captureUserMedia, S3Upload } from '../../utils/media';
 import DataWrapper from "../Quest/QuestDataWrapper";
+
+const hasGetUserMedia = !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+										navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
 @DataWrapper
 @observer
 export default class Quest extends Component {
 	constructor(props) {
 		super(props);
-		this.recordedBlobs = [];
-		this.store = this.props.store;
-		this.mediaRecorder;
 		this.state = {
+			recordVideo: null,
+			src: null,
+			uploadSuccess: null,
+			uploading: false,
 			quest: {
 				name: '',
 				description: '',
@@ -35,6 +42,54 @@ export default class Quest extends Component {
 		};
 		this.handleQuestChange = this.handleQuestChange.bind(this);
 		this.handleGoalChange = this.handleGoalChange.bind(this);
+		this.requestUserMedia = this.requestUserMedia.bind(this);
+		this.startRecord = this.startRecord.bind(this);
+		this.stopRecord = this.stopRecord.bind(this);
+	}
+	requestUserMedia() {
+	  captureUserMedia((stream) => {
+	    this.setState({
+				...this.state,
+				src: window.URL.createObjectURL(stream)
+			});
+	  });
+	}
+	startRecord() {
+	  captureUserMedia((stream) => {
+	    this.state.recordVideo = RecordRTC(stream, {
+				type: 'video',
+				video: {
+					height: 480,
+					width: 320,
+				}
+			});
+	    this.state.recordVideo.startRecording();
+	  });
+	}
+	stopRecord() {
+    this.state.recordVideo.stopRecording(() => {
+      let params = {
+        type: 'video/webm',
+        data: this.state.recordVideo.blob,
+        id: Math.floor(Math.random()*90000) + 10000
+      }
+      this.setState({
+				...this.state,
+				uploading: true,
+			});
+			S3Upload(params)
+				.then((success) => {
+					console.log(success);
+					this.setState({ uploadSuccess: true, uploading: false })
+				});
+		});
+	}
+	componentDidMount() {
+		if (!hasGetUserMedia) {
+			alert('Your browser cannot stream, please switch to Chrome or Firefox.')
+			return;
+		}
+		this.requestUserMedia();
 	}
 	handleQuestChange(key, value) {
 		const newState = this.state;
@@ -55,97 +110,18 @@ export default class Quest extends Component {
 			this.props.history.push('/');
 		});
 	}
-	// Media Helpers
-	handleSourceOpen(event) {
-	  console.log('MediaSource opened');
-	  sourceBuffer = this.mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
-	  console.log('Source buffer: ', sourceBuffer);
-	}
-	handleDataAvailable(event) {
-		console.log(event)
-	  if (event.data && event.data.size > 0) {
-	    this.recordedBlobs.push(event.data);
-	  }
-	}
-	handleStop(event) {
-	  console.log('Recorder stopped: ', event);
-	}
-	startRecording() {
-	  let options = { mimeType: 'video/webm;codecs=vp9' };
-	  if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-	    console.log(options.mimeType + ' is not Supported');
-	    options = { mimeType: 'video/webm;codecs=vp8' };
-	    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-	      console.log(options.mimeType + ' is not Supported');
-	      options = { mimeType: 'video/webm' };
-	      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-	        console.log(options.mimeType + ' is not Supported');
-	        options = { mimeType: '' };
-	      }
-	    }
-	  }
-	  try {
-	    this.mediaRecorder = new MediaRecorder(window.stream, options);
-	  } catch (e) {
-	    console.error('Exception while creating MediaRecorder: ' + e);
-	    alert('Exception while creating MediaRecorder: '
-	      + e + '. mimeType: ' + options.mimeType);
-	    return;
-	  }
-	  console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
-	  this.mediaRecorder.ondataavailable = this.handleDataAvailable;
-		this.mediaRecorder.start(10000);
-		this.mediaRecorder.onstop = this.handleStop;
-	  console.log('MediaRecorder started', this.mediaRecorder);
-	}
-	stopRecording() {
-	  this.mediaRecorder.stop();
-	  console.log('Recorded Blobs: ', this.recordedBlobs);
-	}
-	toggleRecording() {
-		if (this.refs.recordButton.textContent === 'Start Recording') {
-			this.refs.recordButton.textContent = 'Stop Recording';
-	    this.startRecording();
-	  } else {
-			this.refs.recordButton.textContent = 'Start Recording';
-	    this.stopRecording();
-	  }
-	}
-	play() {
-	  let superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
-	  this.refs.recordedVideo.src = window.URL.createObjectURL(superBuffer);
-	}
 	render() {
-		// Setup Media/Navigator
-		this.mediaSource = new MediaSource();
-		this.mediaSource.addEventListener('sourceopen', this.handleSourceOpen, false);
-		navigator.mediaDevices.getUserMedia({
-			audio: true,
-			video: true
-		}).then((stream) => {
-			console.log('getUserMedia() got stream: ', stream);
-			window.stream = stream;
-			console.log(window.URL)
-			if (window.URL) {
-				this.refs.gumVideo.src = window.URL.createObjectURL(stream);
-			} else {
-				this.refs.gumVideo.src = stream;
-			}
-		}).catch((error) => {
-			console.log('navigator.getUserMedia error: ', error);
-		});
 		return (
 			<div className="ask">
 				<Link className="back-button" to="/">← Back</Link>
 				<section>
 					<article>
 						<div className="video-holders">
-							<video ref="gumVideo" muted></video>
-							<video ref="recordedVideo" loop></video>
+							<Webcam src={this.state.src}></Webcam>
 						</div>
 						<div>
-							<button ref="recordButton" onClick={() => this.toggleRecording()}>Start Recording</button>
-							<button ref="playButton" onClick={() => this.play()} disabled={this.state.recorded}>Playback</button>
+							<button ref="recordButton" onClick={this.startRecord}>Start Recording</button>
+							<button ref="recordButton" onClick={this.stopRecord}>Stop Recording</button>
 						</div>
 						<div className="input-field">
 							<label>Your Project</label>
@@ -183,8 +159,3 @@ export default class Quest extends Component {
 		);
 	}
 }
-
-// <div className="input-field">
-// 	<label>Youtube URL (Under 1 minute!)</label>
-// 	<input type="text" placeholder="Ex) https://www.youtube.com/watch?v=Sn7t-T3Ngzo" onChange={e => this.handleQuestChange('video_url', e.target.value)} />
-// </div>
