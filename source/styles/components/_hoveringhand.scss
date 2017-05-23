@@ -1,0 +1,27 @@
+.hovering-hand {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  height: 96px;
+  width: 96px;
+  background: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 64px;
+  border-radius: 100%;
+  &:hover {
+    background: black;
+  }
+  @media(max-width: 960px) {
+    background: yellow;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60px;
+    font-size: 54px;
+    width: 100%;
+    border-radius: 0;
+  }
+}

@@ -5,6 +5,7 @@ import LazyRoute from "lazy-route";
 import DevTools from "mobx-react-devtools";
 
 import TopBar from "../component-library/Navigation/TopBar";
+import HoveringHand from "../component-library/Navigation/HoveringHand";
 
 @inject("store")
 @observer
@@ -45,6 +46,7 @@ export default class App extends Component {
 				<footer>
 					<p>😘😘😘 to ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____</p>
 				</footer>
+				<HoveringHand/>
 			</div>
 		);
 	}
