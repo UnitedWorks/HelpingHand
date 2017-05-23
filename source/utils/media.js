@@ -7,7 +7,7 @@ export function captureUserMedia(callback) {
     video: true
   };
   navigator.getUserMedia(params, callback, (error) => {
-    alert(JSON.stringify(error));
+    console.warn(JSON.stringify(error));
   });
 };
 
