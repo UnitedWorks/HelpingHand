@@ -62,9 +62,13 @@ export default class Quest extends Component {
 	  console.log('Source buffer: ', sourceBuffer);
 	}
 	handleDataAvailable(event) {
+		console.log(event)
 	  if (event.data && event.data.size > 0) {
 	    this.recordedBlobs.push(event.data);
 	  }
+	}
+	handleStop(event) {
+	  console.log('Recorder stopped: ', event);
 	}
 	startRecording() {
 	  let options = { mimeType: 'video/webm;codecs=vp9' };
@@ -90,6 +94,8 @@ export default class Quest extends Component {
 	  }
 	  console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
 	  this.mediaRecorder.ondataavailable = this.handleDataAvailable;
+		this.mediaRecorder.start(10000);
+		this.mediaRecorder.onstop = this.handleStop;
 	  console.log('MediaRecorder started', this.mediaRecorder);
 	}
 	stopRecording() {
@@ -139,7 +145,7 @@ export default class Quest extends Component {
 						</div>
 						<div>
 							<button ref="recordButton" onClick={() => this.toggleRecording()}>Start Recording</button>
-							<button ref="playButton" onClick={() => this.play()} disabled={this.state.recorded}>Play</button>
+							<button ref="playButton" onClick={() => this.play()} disabled={this.state.recorded}>Playback</button>
 						</div>
 						<div className="input-field">
 							<label>Your Project</label>
