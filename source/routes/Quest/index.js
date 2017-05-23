@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
+import ReactPlayer from 'react-player';
 
 import DataWrapper from "./QuestDataWrapper";
 
@@ -33,9 +34,14 @@ export default class Quest extends Component {
 								)
 							})}
 						</article>}
-					{!!quest && <aside>
-						<iframe id="ytplayer" type="text/html" src={`https://www.youtube.com/embed/${quest.video_url}?controls=0&fs=0&loop=1&modestbranding=1&rel=0&color=white`} />
-					</aside>}
+					<aside>
+						<ReactPlayer
+							width={300}
+	            controls={true}
+	            url={!!quest.video_url && quest.video_url.includes('amazonaws.com') ?
+								quest.video_url : `https://www.youtube.com/watch?v=${quest.video_url}`}
+						/>
+					</aside>
 				</section>
 			</div>
 		);

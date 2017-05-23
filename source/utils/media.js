@@ -2,13 +2,16 @@ import axios from 'axios';
 import { apiURL } from './constants';
 
 export function captureUserMedia(callback) {
-  const params = { audio: false, video: true };
+  const params = {
+    audio: true,
+    video: true
+  };
   navigator.getUserMedia(params, callback, (error) => {
     alert(JSON.stringify(error));
   });
 };
 
-// handle S3 upload
+// Handle S3 upload
 function getSignedUrl(file) {
   let queryString = '?objectName=' + file.id + '&contentType=' + encodeURIComponent(file.type);
   return fetch(`${apiURL}/s3/sign${queryString}`)
@@ -41,10 +44,9 @@ export function S3Upload(fileInfo) { //parameters: { type, data, id }
         xhr.onload = function() {
           if (xhr.status === 200) {
             console.log(xhr.status)
-            resolve(true);
+            resolve(s3Info);
           } else {
             console.log(xhr.status)
-
             reject(xhr.status);
           }
         };

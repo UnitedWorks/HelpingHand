@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import RecordRTC from 'recordrtc';
 
+const Whammy = RecordRTC.Whammy;
+const WhammyRecorder = RecordRTC.WhammyRecorder;
+const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+
 import { captureUserMedia, S3Upload } from '../../utils/media';
 import DataWrapper from "../Quest/QuestDataWrapper";
 
@@ -17,7 +21,8 @@ export default class Quest extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recordVideo: null,
+			videoRecorder: null,
+			audioRecorder: null,
 			src: null,
 			uploadSuccess: null,
 			uploading: false,
@@ -55,22 +60,35 @@ export default class Quest extends Component {
 	  });
 	}
 	startRecord() {
+		this.refs.startButton.hidden = true;
+		this.refs.stopButton.hidden = false;
 	  captureUserMedia((stream) => {
-	    this.state.recordVideo = RecordRTC(stream, {
+			this.state.audioRecorder = RecordRTC(stream, {
+			  recorderType: StereoAudioRecorder
+			});
+			this.state.videoRecorder = RecordRTC(stream, {
 				type: 'video',
+			  recorderType: WhammyRecorder,
 				video: {
 					height: 480,
 					width: 320,
-				}
+				},
 			});
-	    this.state.recordVideo.startRecording();
+			this.state.videoRecorder.initRecorder(() => {
+			  this.state.audioRecorder.initRecorder(() => {
+			    // Both recorders are ready to record things accurately
+			    this.state.videoRecorder.startRecording();
+			    this.state.audioRecorder.startRecording();
+			  });
+			});
 	  });
 	}
 	stopRecord() {
-    this.state.recordVideo.stopRecording(() => {
+		this.refs.stopButton.hidden = true;
+    this.state.videoRecorder.stopRecording(() => {
       let params = {
         type: 'video/webm',
-        data: this.state.recordVideo.blob,
+        data: this.state.videoRecorder.blob,
         id: Math.floor(Math.random()*90000) + 10000
       }
       this.setState({
@@ -78,9 +96,16 @@ export default class Quest extends Component {
 				uploading: true,
 			});
 			S3Upload(params)
-				.then((success) => {
-					console.log(success);
-					this.setState({ uploadSuccess: true, uploading: false })
+				.then((awsInfo) => {
+					this.setState({
+						...this.state,
+						uploadSuccess: true,
+						uploading: false,
+						quest: {
+							...this.state.quest,
+							video_url: awsInfo.publicUrl,
+						},
+					});
 				});
 		});
 	}
@@ -90,6 +115,7 @@ export default class Quest extends Component {
 			return;
 		}
 		this.requestUserMedia();
+		this.refs.stopButton.hidden = true;
 	}
 	handleQuestChange(key, value) {
 		const newState = this.state;
@@ -116,13 +142,20 @@ export default class Quest extends Component {
 				<Link className="back-button" to="/">← Back</Link>
 				<section>
 					<article>
-						<div className="video-holders">
+						<div className="input-field">
+							<h3>Youtube URL</h3>
+							<h6>No more than ~30-45 seconds</h6>
+							<input type="video_url" placeholder="Ex) youtube.com/watch?v=124812482" onChange={e => this.handleQuestChange('name', e.target.value)} />
+							<p>or...</p>
+						</div>
+						{!this.state.uploadSuccess && <div className="recordButtons">
+							<button ref="startButton" onClick={this.startRecord} disabled>Record a Pitch (Broken)</button>
+							<button ref="stopButton" onClick={this.stopRecord}>Stop Recording</button>
+						</div>}
+						<div className={this.state.uploadSuccess ? 'video-holders uploaded' : 'video-holders'}>
 							<Webcam src={this.state.src}></Webcam>
 						</div>
-						<div>
-							<button ref="recordButton" onClick={this.startRecord}>Start Recording</button>
-							<button ref="recordButton" onClick={this.stopRecord}>Stop Recording</button>
-						</div>
+						{this.state.uploadSuccess && <h5>Uploaded!</h5>}
 						<div className="input-field">
 							<label>Your Project</label>
 							<input type="text" placeholder="Ex) Helping Hand!" onChange={e => this.handleQuestChange('name', e.target.value)} />

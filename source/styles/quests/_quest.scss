@@ -80,6 +80,16 @@
 }
 
 .video-holders {
+	width: auto;
+	& > video {
+		width: 420px;
+	}
+	&.uploaded {
+		background: yellow;
+	}
+	&.uploaded > video {
+		opacity: 0.5;
+	}
 }
 
 .ask-goal {
@@ -98,13 +108,20 @@
 
 .input-field {
 	margin: 18px 0;
+	h6 {
+		padding-bottom: 24px;
+		color: #666;
+	}
+	p {
+		padding-top: 12px;
+	}
 	label, input {
 		display: block;
 	}
 	label {
 		font-size: 12px;
 		font-weight: 200;
-		padding-bottom: 6px;
+		padding: 6px 0;
 	}
 	input {
 		width: 100%;
@@ -117,6 +134,7 @@
 
 button {
 	padding: 12px;
+	margin: 12px 0;
 	border: 1px solid black;
 	outline: none;
 	background: none;
