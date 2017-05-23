@@ -1,32 +1,49 @@
 .quest-tile {
 	min-width: 960px;
 	max-width: 960px;
-	padding: 24px;
-	font-size: 14px;
-	text-align: center;
-	&.width-400 {
-		min-width: 400px;
-		max-width: 400px;
-	}
-	&.width-350 {
-		min-width: 350px;
-		max-width: 350px;
-	}
+	margin: 24px;
+	font-size: 12px;
 	&.width-300 {
 		min-width: 300px;
 		max-width: 300px;
 	}
+	&.width-270 {
+		min-width: 270px;
+		max-width: 270px;
+	}
+	&.width-240 {
+		min-width: 240px;
+		max-width: 240px;
+	}
 	iframe {
 		width: 100%;
 	}
-	span.giving {
-		color: #ccc;
+	.giving {
+		color: black;
 		font-weight: 900;
-		text-decoration: underline;
+		padding: 6px;
 	}
-	span.reward {
+	.reward {
+		padding: 4px 8px;
+		border-top: 1px solid yellow;
+		width: 100%;
 		&:hover {
+			background: yellow;
 			font-weight: 900;
+		}
+	}
+	.goArrow {
+		position: relative;
+		color: black;
+		float: right;
+		font-size: 18px;
+		padding: 0 4px;
+		top: -3px;
+	}
+	&__actions {
+		border: 1px solid yellow;
+		.header {
+			background: yellow;
 		}
 	}
 	@media screen and (max-width: 960px) {
