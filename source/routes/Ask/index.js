@@ -10,7 +10,9 @@ import DataWrapper from "../Quest/QuestDataWrapper";
 export default class Quest extends Component {
 	constructor(props) {
 		super(props);
+		this.recordedBlobs = [];
 		this.store = this.props.store;
+		this.mediaRecorder;
 		this.state = {
 			quest: {
 				name: '',
@@ -53,32 +55,104 @@ export default class Quest extends Component {
 			this.props.history.push('/');
 		});
 	}
+	// Media Helpers
+	handleSourceOpen(event) {
+	  console.log('MediaSource opened');
+	  sourceBuffer = this.mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
+	  console.log('Source buffer: ', sourceBuffer);
+	}
+	handleDataAvailable(event) {
+	  if (event.data && event.data.size > 0) {
+	    this.recordedBlobs.push(event.data);
+	  }
+	}
+	startRecording() {
+	  let options = { mimeType: 'video/webm;codecs=vp9' };
+	  if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+	    console.log(options.mimeType + ' is not Supported');
+	    options = { mimeType: 'video/webm;codecs=vp8' };
+	    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+	      console.log(options.mimeType + ' is not Supported');
+	      options = { mimeType: 'video/webm' };
+	      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+	        console.log(options.mimeType + ' is not Supported');
+	        options = { mimeType: '' };
+	      }
+	    }
+	  }
+	  try {
+	    this.mediaRecorder = new MediaRecorder(window.stream, options);
+	  } catch (e) {
+	    console.error('Exception while creating MediaRecorder: ' + e);
+	    alert('Exception while creating MediaRecorder: '
+	      + e + '. mimeType: ' + options.mimeType);
+	    return;
+	  }
+	  console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
+	  this.mediaRecorder.ondataavailable = this.handleDataAvailable;
+	  console.log('MediaRecorder started', this.mediaRecorder);
+	}
+	stopRecording() {
+	  this.mediaRecorder.stop();
+	  console.log('Recorded Blobs: ', this.recordedBlobs);
+	}
+	toggleRecording() {
+		if (this.refs.recordButton.textContent === 'Start Recording') {
+			this.refs.recordButton.textContent = 'Stop Recording';
+	    this.startRecording();
+	  } else {
+			this.refs.recordButton.textContent = 'Start Recording';
+	    this.stopRecording();
+	  }
+	}
+	play() {
+	  let superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
+	  this.refs.recordedVideo.src = window.URL.createObjectURL(superBuffer);
+	}
 	render() {
+		// Setup Media/Navigator
+		this.mediaSource = new MediaSource();
+		this.mediaSource.addEventListener('sourceopen', this.handleSourceOpen, false);
+		navigator.mediaDevices.getUserMedia({
+			audio: true,
+			video: true
+		}).then((stream) => {
+			console.log('getUserMedia() got stream: ', stream);
+			window.stream = stream;
+			console.log(window.URL)
+			if (window.URL) {
+				this.refs.gumVideo.src = window.URL.createObjectURL(stream);
+			} else {
+				this.refs.gumVideo.src = stream;
+			}
+		}).catch((error) => {
+			console.log('navigator.getUserMedia error: ', error);
+		});
 		return (
 			<div className="ask">
 				<Link className="back-button" to="/">← Back</Link>
 				<section>
 					<article>
-						<div className="input-field">
-							<h6>Your Ask!  -> <u><a href="https://www.youtube.com/upload" target="_blank">Upload on Youtube</a></u></h6>
-							<small>Under 30~45 Seconds</small>
-							<br/>
-							<input type="text" placeholder="Ex) https://www.youtube.com/watch?v=Sn7t-T3Ngzo" onChange={e => this.handleQuestChange('video_url', e.target.value)} />
+						<div className="video-holders">
+							<video ref="gumVideo" muted></video>
+							<video ref="recordedVideo" loop></video>
 						</div>
-						<br/>
+						<div>
+							<button ref="recordButton" onClick={() => this.toggleRecording()}>Start Recording</button>
+							<button ref="playButton" onClick={() => this.play()} disabled={this.state.recorded}>Play</button>
+						</div>
 						<div className="input-field">
-							<label>Project Name</label>
+							<label>Your Project</label>
 							<input type="text" placeholder="Ex) Helping Hand!" onChange={e => this.handleQuestChange('name', e.target.value)} />
 						</div>
 						<div className="input-field">
-							<label>Project Description</label>
+							<label>About It</label>
 							<input type="text" placeholder="Ex) Give folks a way to ask a community for non-monetary assistance while still rewarding them for their help. Can be projects big and small!" onChange={e => this.handleQuestChange('description', e.target.value)} />
 						</div>
-						<br/>
 						{Array.prototype.map.call([{},{},{}], (goal, index) => {
 							return (
 								<div className="ask-goal" key={index}>
-									<h6>Goal #{index + 1} {index !== 0 ? '(Optional)' : ''}</h6>
+									<h6>Ask #{index + 1} {index !== 0 ? '(Optional)' : ''}</h6>
 									<div className="input-container">
 										<div className="input-field">
 											<label>Need help with...</label>
@@ -96,7 +170,6 @@ export default class Quest extends Component {
 								</div>
 							)
 						})}
-						<br/>
 						<button onClick={() => this.handleSumbit()}>Submit →</button>
 					</article>
 				</section>
@@ -104,3 +177,8 @@ export default class Quest extends Component {
 		);
 	}
 }
+
+// <div className="input-field">
+// 	<label>Youtube URL (Under 1 minute!)</label>
+// 	<input type="text" placeholder="Ex) https://www.youtube.com/watch?v=Sn7t-T3Ngzo" onChange={e => this.handleQuestChange('video_url', e.target.value)} />
+// </div>
