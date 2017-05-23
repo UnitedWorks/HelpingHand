@@ -149,7 +149,7 @@ export default class Quest extends Component {
 							<p>or...</p>
 						</div>
 						{!this.state.uploadSuccess && <div className="recordButtons">
-							<button ref="startButton" onClick={this.startRecord} disabled>Record a Pitch (Broken)</button>
+							<button ref="startButton" onClick={this.startRecord} disabled>Record a Pitch (Coming Soon)</button>
 							<button ref="stopButton" onClick={this.stopRecord}>Stop Recording</button>
 						</div>}
 						<div className={this.state.uploadSuccess ? 'video-holders uploaded' : 'video-holders'}>
