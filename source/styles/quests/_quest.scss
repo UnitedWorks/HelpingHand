@@ -2,6 +2,7 @@
 	width: 960px;
 	margin: 0 auto;
 	padding: 24px;
+	line-height: 1.5;
 	.back-button {
 		display: none;
 	}
@@ -72,6 +73,10 @@
 	}
 }
 
+.quest {
+	justify-content: center;
+}
+
 .ask {
 	text-align: center;
 	h6 {
@@ -120,7 +125,7 @@
 	}
 	label {
 		font-size: 12px;
-		font-weight: 200;
+		font-weight: 600;
 		padding: 6px 0;
 	}
 	input {

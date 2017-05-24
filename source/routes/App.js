@@ -20,8 +20,6 @@ export default class App extends Component {
 		} = this.store.appState;
 		return (
 			<div className="wrapper">
-				<TopBar />
-
 				<Route
 					exact
 					path="/"
@@ -46,7 +44,6 @@ export default class App extends Component {
 				<footer>
 					<p>😘😘😘 to ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____</p>
 				</footer>
-				<HoveringHand/>
 			</div>
 		);
 	}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 
 import DataWrapper from "../Quest/QuestDataWrapper";
@@ -22,6 +23,12 @@ export default class Landing extends Component {
 							);
 						})
 					: "Loading..."}
+				<Link to="/ask">
+					<div className="quest-tile width-240 asking-tile">
+						<p>Ask for a</p>
+						<h1>👋</h1>
+					</div>
+				</Link>
 			</div>
 		);
 	}
