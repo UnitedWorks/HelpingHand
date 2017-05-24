@@ -16,23 +16,7 @@ export default class Quest extends Component {
 		const { quest } = this.store.questState;
 		return (
 			<div className="quest">
-				<section>
-					{!!quest &&
-						<article>
-							<small>Give a hand to...</small>
-							<h3>{quest.name}</h3>
-							<p>{quest.description}</p>
-						</article>}
-				</section>
-				<section>
-					<ReactPlayer
-						width={240}
-						height={420}
-						controls={true}
-						url={quest.video_url}
-						/>
-				</section>
-				<p>Here are ways you can help. Be sure to let them know when you do!</p>
+				<p>I Need...</p>
 				<section className="goals">
 					{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
 						return (
@@ -51,6 +35,22 @@ export default class Quest extends Component {
 							</div>
 						)
 					})}
+				</section>
+				<section>
+					{!!quest &&
+						<article>
+							<p>for...</p>
+							<h3>{quest.name}</h3>
+							<p>{quest.description}</p>
+						</article>}
+				</section>
+				<section>
+					<ReactPlayer
+						width={240}
+						height={420}
+						controls={true}
+						url={quest.video_url}
+						/>
 				</section>
 			</div>
 		);
