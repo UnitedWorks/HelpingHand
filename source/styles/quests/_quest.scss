@@ -21,6 +21,9 @@
 		display: flex;
 		flex-direction: row;
 		margin: 12px 0;
+		article {
+			flex-grow: 1;
+		}
 		aside {
 			display: flex;
 			align-items: center;

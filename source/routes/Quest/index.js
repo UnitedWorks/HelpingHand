@@ -29,7 +29,13 @@ export default class Quest extends Component {
 							<p>{quest.description}</p>
 						</article>}
 				</section>
-				<br/>
+				<section>
+					<ReactPlayer
+						width={300}
+						controls={true}
+						url={quest.video_url}
+						/>
+				</section>
 				<h2>{headlines[Math.floor(Math.random() * headlines.length)]}</h2>
 				<section className="goals">
 					{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
@@ -51,13 +57,6 @@ export default class Quest extends Component {
 					})}
 				</section>
 				<p>Make sure you let them know!</p>
-				<section>
-					<ReactPlayer
-						width={300}
-						controls={true}
-						url={quest.video_url}
-						/>
-				</section>
 			</div>
 		);
 	}
