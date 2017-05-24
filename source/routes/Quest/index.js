@@ -5,11 +5,6 @@ import ReactPlayer from 'react-player';
 
 import DataWrapper from "./QuestDataWrapper";
 
-const headlines = [
-	'Can you help out?',
-	'What can you do?',
-];
-
 @DataWrapper
 @observer
 export default class Quest extends Component {
@@ -31,12 +26,13 @@ export default class Quest extends Component {
 				</section>
 				<section>
 					<ReactPlayer
-						width={300}
+						width={240}
+						height={420}
 						controls={true}
 						url={quest.video_url}
 						/>
 				</section>
-				<h2>{headlines[Math.floor(Math.random() * headlines.length)]}</h2>
+				<p>Here are ways you can help. Be sure to let them know when you do!</p>
 				<section className="goals">
 					{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
 						return (
@@ -56,7 +52,6 @@ export default class Quest extends Component {
 						)
 					})}
 				</section>
-				<p>Make sure you let them know!</p>
 			</div>
 		);
 	}
