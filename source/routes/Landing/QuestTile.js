@@ -12,7 +12,7 @@ export default class QuestTile extends Component {
         <div className="quest-tile__actions">
           <Link to={`quest${this.props.match.path}${this.props.quest.id}`}>
             <div className="header">
-              <span className="giving">I Need</span>
+              <span className="giving">Asking For</span>
               <span className="goArrow">→</span>
             </div>
             {Array.prototype.map.call(this.props.quest.goals, (goal, index) => {
@@ -34,7 +34,7 @@ export default class QuestTile extends Component {
         <div className="quest-tile__actions">
           <Link to={`quest${this.props.match.path}${this.props.quest.id}`}>
             <div className="header">
-              <span className="giving">I'm Giving</span>
+              <span className="giving">Giving in Return</span>
               <span className="goArrow">→</span>
             </div>
             {Array.prototype.map.call(this.props.quest.goals, (quest, index) => {

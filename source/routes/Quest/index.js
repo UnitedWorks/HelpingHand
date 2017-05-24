@@ -16,20 +16,20 @@ export default class Quest extends Component {
 		const { quest } = this.store.questState;
 		return (
 			<div className="quest">
-				<p>I Need...</p>
+				<p>Asking for...</p>
 				<section className="goals">
 					{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
 						return (
 							<div className="goal" key={index}>
 								<div className="goal__ask">
-									<h5>#{index + 1} {goal.ask}</h5>
+									<h5>{goal.ask}</h5>
 								</div>
 								<div className="goal__giving">
-									<small>Will Give</small>
+									<small>In Return</small>
 									<h5>{goal.giving}</h5>
 								</div>
 								<div className="goal__proof">
-									<small>Prove by</small>
+									<small>To Do This / When Done</small>
 									<p>{goal.proof_instructions}</p>
 								</div>
 							</div>
@@ -39,7 +39,7 @@ export default class Quest extends Component {
 				<section>
 					{!!quest &&
 						<article>
-							<p>for...</p>
+							<p>to help...</p>
 							<h3>{quest.name}</h3>
 							<p>{quest.description}</p>
 						</article>}
