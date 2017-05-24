@@ -50,8 +50,8 @@ export default class Quest extends Component {
 	}
 	handleFileUpload() {
 		const stateShot = this.state;
-	  if (this.refs.fileInput.files[0].size > 15000000) {
-	    return alert('Make sure file is under 15MB');
+	  if (this.refs.fileInput.files[0].size > 50000000) {
+	    return alert('Make sure file is under 50MB');
 	  }
 		this.setState({
 			...stateShot,
