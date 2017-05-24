@@ -60,8 +60,8 @@
     "react-dom": "^15.3.2",
     "react-player": "^0.18.0",
     "react-router-dom": "latest",
-    "recordrtc": "^5.4.1",
     "rfx-core": "^1.5.3",
+    "uuid": "^3.0.1",
     "whatwg-fetch": "^1.0.0"
   },
   "repository": {

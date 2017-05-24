@@ -1,16 +1,6 @@
 import axios from 'axios';
 import { apiURL } from './constants';
 
-export function captureUserMedia(callback) {
-  const params = {
-    audio: true,
-    video: true
-  };
-  navigator.getUserMedia(params, callback, (error) => {
-    console.warn(JSON.stringify(error));
-  });
-};
-
 // Handle S3 upload
 function getSignedUrl(file) {
   let queryString = '?objectName=' + file.id + '&contentType=' + encodeURIComponent(file.type);
