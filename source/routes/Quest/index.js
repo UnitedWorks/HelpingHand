@@ -5,6 +5,11 @@ import ReactPlayer from 'react-player';
 
 import DataWrapper from "./QuestDataWrapper";
 
+const headlines = [
+	'Can you help out?',
+	'What can you do?',
+];
+
 @DataWrapper
 @observer
 export default class Quest extends Component {
@@ -16,31 +21,42 @@ export default class Quest extends Component {
 		const { quest } = this.store.questState;
 		return (
 			<div className="quest">
-				<Link className="back-button" to="/">← Back</Link>
 				<section>
 					{!!quest &&
 						<article>
 							<small>Give a hand to...</small>
-							<h1>{quest.name}</h1>
+							<h3>{quest.name}</h3>
 							<p>{quest.description}</p>
-							<br/>
-							{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
-								return (
-									<div className="goal" key={index}>
-										<h5><u>Needs</u>: {goal.ask}</h5>
-										<h6><u>Giving</u>: {goal.giving}</h6>
-										<p><u>Prove by</u>: {goal.proof_instructions}</p>
-									</div>
-								)
-							})}
 						</article>}
-					<aside>
-						<ReactPlayer
-							width={300}
-	            controls={true}
-							url={quest.video_url}
+				</section>
+				<br/>
+				<h2>{headlines[Math.floor(Math.random() * headlines.length)]}</h2>
+				<section className="goals">
+					{!!quest.goals && Array.prototype.map.call(quest.goals, (goal, index) => {
+						return (
+							<div className="goal" key={index}>
+								<div className="goal__ask">
+									<h5>#{index + 1} {goal.ask}</h5>
+								</div>
+								<div className="goal__giving">
+									<small>Will Give</small>
+									<h5>{goal.giving}</h5>
+								</div>
+								<div className="goal__proof">
+									<small>Prove by</small>
+									<p>{goal.proof_instructions}</p>
+								</div>
+							</div>
+						)
+					})}
+				</section>
+				<p>Make sure you let them know!</p>
+				<section>
+					<ReactPlayer
+						width={300}
+						controls={true}
+						url={quest.video_url}
 						/>
-					</aside>
 				</section>
 			</div>
 		);
