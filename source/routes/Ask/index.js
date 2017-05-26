@@ -92,7 +92,7 @@ export default class Quest extends Component {
 							<h6>Upload a video! Be short, informal, and captivating.</h6>
 							<div>
 								<input ref="fileInput" type="file" accept="video/*" onChange={this.handleFileUpload} />
-								<b>Upload Video</b>{ this.state.fileName ? ` → ${this.state.fileName}` : ''}
+								<b>Record/Upload Video</b>{ this.state.fileName ? ` → ${this.state.fileName}` : ''}
 							</div>
 						</div>
 						<div className="input-field">
