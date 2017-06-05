@@ -16,6 +16,12 @@ export default class Landing extends Component {
 		const { quests } = this.store.questState;
 		return (
 			<div className="quests">
+				<Link to="/ask">
+					<div className="quest-tile width-240 asking-tile">
+						<p>Ask for a</p>
+						<h2>👋</h2>
+					</div>
+				</Link>
 				{quests && quests.length
 					? quests.map(quest => {
 							return (
@@ -23,12 +29,6 @@ export default class Landing extends Component {
 							);
 						})
 					: "Loading..."}
-				<Link to="/ask">
-					<div className="quest-tile width-240 asking-tile">
-						<p>Ask for a</p>
-						<h2>👋</h2>
-					</div>
-				</Link>
 			</div>
 		);
 	}

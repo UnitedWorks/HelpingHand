@@ -32,6 +32,9 @@
 				min-height: 420px;
 			}
 		}
+		&.goals {
+			justify-content: center;
+		}
 	}
 	@media(max-width: 960px) {
 		width: 100%;

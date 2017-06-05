@@ -31,14 +31,13 @@ footer {
 	width: 100%;
 	height: 60px;
 	padding: 16px;
-  margin: 16px 0;
+  margin-bottom: 40px;
 	font-size: 14px;
 	color: #aaa;
 	p {
-		margin-top: 8px;
+		margin: 8px;
 	}
-  a > p {
-    font-size: 10px;
+  p > a, a > p {
     text-decoration: underline;
     opacity: 0.5;
     transition: 0.3s;
