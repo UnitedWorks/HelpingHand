@@ -3,6 +3,7 @@ import { Route, Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import LazyRoute from "lazy-route";
 import DevTools from "mobx-react-devtools";
+import { Helmet } from "react-helmet";
 
 import TopBar from "../component-library/Navigation/TopBar";
 import HoveringHand from "../component-library/Navigation/HoveringHand";
@@ -20,6 +21,9 @@ export default class App extends Component {
 		} = this.store.appState;
 		return (
 			<div className="wrapper">
+				<Helmet>
+					<link rel="icon" type="image/png" href={require('../assets/hand.png')} />
+				</Helmet>
 				<Route
 					exact
 					path="/"
