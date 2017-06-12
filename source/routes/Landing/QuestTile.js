@@ -22,6 +22,7 @@ export default class QuestTile extends Component {
               <Link to={`quest${this.props.match.path}${this.props.quest.id}`}>
                 <div className="header">
                   <span className="giving"><u>Ask</u>: {goal.ask.length > 75 ? `${goal.ask.substring(0,75)}...` : goal.ask}</span>
+                  <span className="goArrow">→</span>
                 </div>
                 <div className="reward" key={index}>
                   <u>Giving</u>: {goal.giving.length > 75 ? `${goal.giving.substring(0,75)}...` : goal.giving}
@@ -31,7 +32,7 @@ export default class QuestTile extends Component {
             );
           })}
         <a href={`mailto:${this.props.quest.contact_email}`} target="_blank"><div className="quest-tile__actions">
-          Help {this.props.quest.contact_name}
+          <p>Give Help</p><h2>👋</h2>
         </div></a>
       </div>
     )

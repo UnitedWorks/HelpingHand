@@ -3,7 +3,6 @@
 	max-width: 960px;
 	margin: 24px;
 	font-size: 12px;
-	background: yellow;
 	&.width-300 {
 		min-width: 300px;
 		max-width: 300px;
@@ -90,5 +89,10 @@
 		padding: 8px;
 		font-size: 16px;
 		font-weight: 900;
+		border-radius: 0 0 24px 24px;
+		p {
+			opacity: 0.5;
+			font-size: 12px;
+		}
 	}
 }
