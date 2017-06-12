@@ -103,7 +103,7 @@ export default class Quest extends Component {
 							<label>Why should we care?</label>
 							<input type="text" placeholder="Give folks a way to ask a community for non-monetary assistance while still rewarding them for their help. Can be projects big and small!" onChange={e => this.handleQuestChange('description', e.target.value)} />
 						</div>
-						{Array.prototype.map.call([{},{}], (goal, index) => {
+						{Array.prototype.map.call([{}, {}], (goal, index) => {
 							return (
 								<div className="ask-goal" key={index}>
 									<div className="input-container">
@@ -123,7 +123,15 @@ export default class Quest extends Component {
 								</div>
 							);
 						})}
-						<button disabled={!this.state.fileUploaded} onClick={() => this.handleSumbit()}>Submit Your 👋 →</button>
+						<div className="input-field">
+							<label>Your Name</label>
+							<input type="text" placeholder="Buddy" onChange={e => this.handleQuestChange('contact_name', e.target.value)} />
+						</div>
+						<div className="input-field">
+							<label>Your Email</label>
+							<input type="text" placeholder="buddy@hey.community" onChange={e => this.handleQuestChange('contact_email', e.target.value)} />
+						</div>
+						<button disabled={!this.state.fileUploaded || this.state.contact_email || this.state.contact_name} onClick={() => this.handleSumbit()}>Submit Your 👋 →</button>
 					</article>
 				</section>
 			</div>

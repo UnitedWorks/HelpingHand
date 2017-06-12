@@ -18,7 +18,7 @@ export default class Landing extends Component {
 			<div className="quests">
 				<Link to="/ask">
 					<div className="quest-tile width-240 asking-tile">
-						<p>Ask for a</p>
+						<p>Request Help</p>
 						<h2>👋</h2>
 					</div>
 				</Link>
